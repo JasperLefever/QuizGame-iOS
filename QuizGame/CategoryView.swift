@@ -10,10 +10,10 @@ import SwiftUI
 struct CategoryListView: View {
     @ObservedObject var viewmodel: CategoriesViewModel
     @StateObject var gameViewModel = QuizGame()
-    @State var gameIsActive = false
+    @State var path = NavigationPath()
     
     var body: some View {
-        NavigationStack {
+        NavigationStack (path: $path) {
             List {
                 ForEach(viewmodel.categories, id: \.id) { category in
                     NavigationLink(value: category) {
@@ -34,8 +34,9 @@ struct CategoryListView: View {
             })
             .navigationTitle("Quiz Categories")
             .navigationDestination(for: Category.self) { category in
-                GameView(viewModel: gameViewModel)
+                GameView(viewModel: gameViewModel, navigationPath: $path)
                     .onAppear(perform: {
+                        gameViewModel.reset()
                         gameViewModel.select(category: category)
                         gameViewModel.fetchQuestions()
                     }

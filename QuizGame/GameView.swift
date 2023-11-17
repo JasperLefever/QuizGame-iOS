@@ -12,6 +12,7 @@ struct GameView: View {
     @State var showAlert: Bool = false
     @State var navigateBack = false
     @EnvironmentObject var history: GameHistoryViewModel
+    @Binding var navigationPath: NavigationPath
     
     var body: some View {
         VStack {
@@ -49,8 +50,7 @@ struct GameView: View {
                     "End",
                     action: {
                         history.addGameToHistory(category: viewModel.currentCategory!.name, score: viewModel.score, date: Date())
-                        viewModel.endGame()
-                        
+                        navigationPath.removeLast(navigationPath.count)
                     })
             },
             message: {

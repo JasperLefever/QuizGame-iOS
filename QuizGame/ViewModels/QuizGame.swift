@@ -119,7 +119,7 @@ class QuizGame: ObservableObject {
         }
     }
     
-    func endGame(){
-        model.endGame()
+    func reset(){
+        model.reset()
     }
 }

@@ -45,7 +45,7 @@ struct Game {
         self.questions = questions
     }
     
-    mutating private func reset() {
+    mutating func reset() {
         questions =  []
         score = 0
         currentCategory = nil
@@ -54,8 +54,5 @@ struct Game {
         isAnswered = false
     }
     
-    mutating func endGame() {
-        reset()
-    }
     
 }
