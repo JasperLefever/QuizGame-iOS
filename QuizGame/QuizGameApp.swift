@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct QuizGameApp: App {
+    @StateObject var game: QuizGame = QuizGame()
+    var gameHistory = GameHistoryViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CategoryListView(viewModel: game)
+                .environmentObject(gameHistory)
         }
     }
 }
