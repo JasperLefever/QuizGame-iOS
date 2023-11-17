@@ -15,7 +15,7 @@ struct CategoryListView: View {
     NavigationView {
       List {
         ForEach(viewmodel.categories, id: \.id) { category in
-          NavigationLink(destination: GameView(viewModel: gameViewModel)) {
+            NavigationLink(destination: GameView(viewModel: gameViewModel)) {
             HStack {
               Image(systemName: category.icon)
                 .foregroundColor(.blue)
@@ -27,7 +27,7 @@ struct CategoryListView: View {
         }
       }
       .navigationBarTitle("Quiz Categories", displayMode: .large)
-    }
+    }.onAppear(perform: viewmodel.fetchCategories )
   }
 }
 

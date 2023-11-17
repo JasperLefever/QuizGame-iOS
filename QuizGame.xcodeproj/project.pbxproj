@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		845DC3DA2B077F4100522D7B /* QuizApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DC3D92B077F4100522D7B /* QuizApi.swift */; };
 		8467AB9C2B077045007C0BB3 /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467AB9B2B077045007C0BB3 /* Answer.swift */; };
 		8467AB9E2B077069007C0BB3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467AB9D2B077069007C0BB3 /* ContentView.swift */; };
 		8467ABA02B077074007C0BB3 /* CategoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467AB9F2B077074007C0BB3 /* CategoriesViewModel.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		845DC3D92B077F4100522D7B /* QuizApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizApi.swift; sourceTree = "<group>"; };
 		8467AB9B2B077045007C0BB3 /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		8467AB9D2B077069007C0BB3 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8467AB9F2B077074007C0BB3 /* CategoriesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewModel.swift; sourceTree = "<group>"; };
@@ -54,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		845DC3D82B077F2D00522D7B /* remote */ = {
+			isa = PBXGroup;
+			children = (
+				845DC3D92B077F4100522D7B /* QuizApi.swift */,
+			);
+			path = remote;
+			sourceTree = "<group>";
+		};
 		8484A1302B01272000AAA18E = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +83,7 @@
 		8484A13B2B01272000AAA18E /* QuizGame */ = {
 			isa = PBXGroup;
 			children = (
+				845DC3D82B077F2D00522D7B /* remote */,
 				8484A13C2B01272000AAA18E /* QuizGameApp.swift */,
 				8494FBF12B04D5D6001BBF6B /* ViewModels */,
 				8494FBF02B04D5C6001BBF6B /* Models */,
@@ -193,6 +204,7 @@
 				8494FBF52B04D7EC001BBF6B /* Question.swift in Sources */,
 				8484A13D2B01272000AAA18E /* QuizGameApp.swift in Sources */,
 				8467AB9C2B077045007C0BB3 /* Answer.swift in Sources */,
+				845DC3DA2B077F4100522D7B /* QuizApi.swift in Sources */,
 				8494FBEF2B04D342001BBF6B /* Category.swift in Sources */,
 				8494FBF72B04E122001BBF6B /* GameView.swift in Sources */,
 				8467ABA02B077074007C0BB3 /* CategoriesViewModel.swift in Sources */,
