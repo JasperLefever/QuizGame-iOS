@@ -12,12 +12,12 @@ struct ContentView: View {
     @StateObject var categoriesViewModel = CategoriesViewModel()
     
   var body: some View {
-    TabView {
+      TabView{
       CategoryListView(viewmodel: categoriesViewModel)
         .tabItem {
           Label("Categories", systemImage: "list.triangle")
         }
-      GameHistoryView(viewModel: history)
+        GameHistoryView(viewModel: history)
         .tabItem {
           Label("History", systemImage: "archivebox")
         }

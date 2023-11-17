@@ -11,7 +11,7 @@ class CategoriesViewModel: ObservableObject {
     
     @Published var categories: [Category] = []
     @Published var hasError = false
-    @Published var error: Error?
+    @Published var error: QuizApiError?
     
     
     private static let cat: [Category] = [
@@ -22,18 +22,20 @@ class CategoriesViewModel: ObservableObject {
         Category( name: "Music", icon: "music.note"),
     ]
     
-    @MainActor
+    //mainactor werkt niet??
     func fetchCategories() {
+        
+        hasError = false
+        
         let page = 1
         let perPage = 10
         let endpoint = "categories?page=\(page)&perPage=\(perPage)"
-        URLSession.shared.fetchData(endpoint: endpoint) { (result: Result<CategoryResult, Error>)  in
+        URLSession.shared.fetchData(endpoint: endpoint) { (result: Result<CategoryResult, QuizApiError>)  in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
                     self.categories = data.items!
                 case .failure(let error):
-                    // error handle
                     self.hasError = true
                     self.error = error
                 }
@@ -45,12 +47,7 @@ class CategoriesViewModel: ObservableObject {
             var metadata : Metadata?
             var items: Array<Category>?
         }
-        
-        struct Metadata : Codable {
-            var total: Int
-            var page: Int
-            var per: Int
-        }
+    
     }
     
     func selectCategory(_ category: Category) {

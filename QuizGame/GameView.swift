@@ -9,40 +9,77 @@ import SwiftUI
 
 struct GameView: View {
   @ObservedObject var viewModel: QuizGame
+  @State var showAlert: Bool = false
+  @State var navigateBack = false
+    @EnvironmentObject var history: GameHistoryViewModel
 
   var body: some View {
     VStack {
-      VStack {
-        HStack {
-          ProgressView(
-            currentQuestion: viewModel.currentQuestionIndex,
-            totalQuestions: viewModel.totalQuestions
-          )
-          .padding()
-          .accentColor(.blue)
-          Spacer()
-          ScoreView(score: viewModel.score)
+      if viewModel.isLoading {
+        SwiftUI.ProgressView {
+          Text("Loading")
         }
-
-        questionView
-      }
-
-      Spacer()
-      if !viewModel.isDone {
-        Button("Next") {
-          viewModel.nextQuestion()
-        }
-        .padding()
-        .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
       } else {
-        Button("Show Results") {
-          // show results
-        }
-        .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
-      }
+        VStack {
+          HStack {
+            ProgressView(
+              currentQuestion: viewModel.currentQuestionIndex,
+              totalQuestions: viewModel.totalQuestions
+            )
+            .padding()
+            .accentColor(.blue)
+            Spacer()
+            ScoreView(score: viewModel.score)
+          }
 
+          questionView
+        }
+
+        Spacer()
+        if !viewModel.isDone {
+          Button("Next") {
+            viewModel.nextQuestion()
+          }
+          .padding()
+          .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
+        } else {
+          Button(
+            "Show results",
+            action: {
+              showAlert = true
+              viewModel.endGame()
+            }
+          )
+          .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
+        }
+      }
     }
     .padding()
+    .alert(
+      isPresented: $viewModel.hasError, error: viewModel.error,
+      actions: {
+        Button(
+          action: viewModel.fetchQuestions,
+          label: {
+            Text("Retry")
+          })
+      }
+    )
+    .alert(
+      "Score", isPresented: $showAlert,
+      actions: {
+        Button(
+          "End",
+          action: {
+              history.addGameToHistory(category: viewModel.currentCategory!.name, score: viewModel.score, date: Date())
+            viewModel.endGame()
+              
+          })
+      },
+      message: {
+        Text("Your score was: \(viewModel.score)")
+      }
+    )
   }
 
   private var questionView: some View {
@@ -71,7 +108,7 @@ struct GameView: View {
 
   private func color(for answer: Answer) -> Color {
     if viewModel.isAnswered {
-        if answer.isCorrect {
+      if answer.isCorrect {
         return .green
       } else {
         return .red
@@ -113,8 +150,4 @@ struct ProgressView: View {
       .padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 16))
   }
 
-}
-
-#Preview {
-  GameView(viewModel: QuizGame())
 }

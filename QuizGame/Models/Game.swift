@@ -10,12 +10,13 @@ import Foundation
 struct Game {
 
   // MARK: - properties
-  var questions: [Question]
+var questions: [Question] =  []
   var score: Int = 0
   var currentCategory: Category?
   var currentQuestionIndex: Int = 0
   var isDone: Bool = false
   var isAnswered: Bool = false
+
 
   // MARK: functions
 
@@ -23,21 +24,33 @@ struct Game {
     currentCategory = cat
   }
 
-    mutating func check(_ answer: Answer) {
-        isAnswered = true
-        
-        if answer.isCorrect {
-            score += 1
-        }
-    }
+  mutating func check(_ answer: Answer) {
+    isAnswered = true
 
-
-  mutating func nextQuestion() {
-    if currentQuestionIndex <= questions.count - 1 {
-      isAnswered = false
-      currentQuestionIndex += 1
-    } else {
-      // throw
+    if answer.isCorrect {
+      score += 1
     }
   }
+
+  mutating func nextQuestion() {
+    if currentQuestionIndex < (questions.count - 1) {
+      currentQuestionIndex += 1
+      isAnswered = false
+    } else {
+      isDone = true
+    }
+  }
+    
+    mutating func setQuestions(_ questions: [Question]) {
+        self.questions = questions
+    }
+
+    func reset() {
+        
+    }
+
+    func endGame() {
+        
+    }
+    
 }
