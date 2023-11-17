@@ -8,7 +8,8 @@
 import Foundation
 
 struct Question {
-    var question: String
-    var answers: Array<String>
-    var correctAnswerIndex : Int
+  var id: UUID
+  var categoryId: UUID
+  var question: String
+  var answers: [Answer]
 }
