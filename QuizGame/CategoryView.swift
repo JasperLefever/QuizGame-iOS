@@ -8,42 +8,29 @@
 import SwiftUI
 
 struct CategoryListView: View {
-    @ObservedObject var viewModel: QuizGame
-    @EnvironmentObject var history: GameHistoryViewModel
-    
-    @State private var showHistory = false
-    
-    var body: some View {
-        NavigationView {
-            List {
-                ForEach(viewModel.categories, id: \.id) { category in
-                    NavigationLink(destination: GameView(viewModel: viewModel)) {
-                        HStack {
-                            Image(systemName: category.icon)
-                                .foregroundColor(.blue)
-                                .imageScale(.large)
-                            Text(category.name)
-                                .font(.headline)
-                        }
-                    }
-                }
+    @ObservedObject var viewmodel: CategoriesViewModel
+    @StateObject var gameViewModel = QuizGame()
+
+  var body: some View {
+    NavigationView {
+      List {
+        ForEach(viewmodel.categories, id: \.id) { category in
+          NavigationLink(destination: GameView(viewModel: gameViewModel)) {
+            HStack {
+              Image(systemName: category.icon)
+                .foregroundColor(.blue)
+                .imageScale(.large)
+              Text(category.name)
+                .font(.headline)
             }
-            .navigationBarTitle("Quiz Categories", displayMode: .large)
-            .toolbar {
-                Button() {
-                    showHistory = true
-                } label: {
-                    Image(systemName: "archivebox")
-                }
-            }
+          }
         }
-        .sheet(isPresented: $showHistory, content: {
-            GameHistoryView(viewModel: history)
-        })
+      }
+      .navigationBarTitle("Quiz Categories", displayMode: .large)
     }
+  }
 }
 
-
 #Preview() {
-    CategoryListView(viewModel: QuizGame())
+  CategoryListView(viewmodel: CategoriesViewModel())
 }

@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct QuizGameApp: App {
-    @StateObject var game: QuizGame = QuizGame()
     var gameHistory = GameHistoryViewModel()
     
     var body: some Scene {
         WindowGroup {
-            CategoryListView(viewModel: game)
+            ContentView()
                 .environmentObject(gameHistory)
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct Category: Hashable {
-  var id: UUID
+  var id: UUID = UUID()
   var name: String
   var icon: String
 }
