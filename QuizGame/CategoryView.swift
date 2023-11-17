@@ -10,16 +10,13 @@ import SwiftUI
 struct CategoryListView: View {
     @ObservedObject var viewmodel: CategoriesViewModel
     @StateObject var gameViewModel = QuizGame()
-    
+    @State var gameIsActive = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(viewmodel.categories, id: \.id) { category in
-                    NavigationLink(destination: GameView(viewModel: gameViewModel).onAppear(perform: {
-                        gameViewModel.select(category: category)
-                        gameViewModel.fetchQuestions()
-                    })) {
+                    NavigationLink(value: category) {
                         HStack {
                             Image(systemName: category.icon)
                                 .foregroundColor(.blue)
@@ -35,7 +32,14 @@ struct CategoryListView: View {
                     Text("Retry")
                 })
             })
-            .navigationBarTitle("Quiz Categories", displayMode: .large)
+            .navigationTitle("Quiz Categories")
+            .navigationDestination(for: Category.self) { category in
+                GameView(viewModel: gameViewModel)
+                    .onAppear(perform: {
+                        gameViewModel.select(category: category)
+                        gameViewModel.fetchQuestions()
+                    }
+            )}
         }.onAppear(perform: viewmodel.fetchCategories )
     }
 }

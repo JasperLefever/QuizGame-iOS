@@ -21,49 +21,26 @@ struct GameView: View {
                 }
             } else {
                 VStack {
-                    HStack {
-                        ProgressView(
-                            currentQuestion: viewModel.currentQuestionIndex,
-                            totalQuestions: viewModel.totalQuestions
-                        )
-                        .padding()
-                        .accentColor(.blue)
-                        Spacer()
-                        ScoreView(score: viewModel.score)
-                    }
+                    gameInfoRow
                     
                     questionView
                 }
                 
                 Spacer()
+                
                 if !viewModel.isDone {
-                    Button("Next") {
-                        viewModel.nextQuestion()
-                    }
-                    .padding()
-                    .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
+                    next
                 } else {
-                    Button(
-                        "Show results",
-                        action: {
-                            showAlert = true
-                            viewModel.endGame()
-                        }
-                    )
-                    .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
+                    showResults
                 }
             }
         }
         .padding()
-        .alert(
-            isPresented: $viewModel.hasError, error: viewModel.error,
-            actions: {
-                Button(
-                    action: viewModel.fetchQuestions,
-                    label: {
-                        Text("Retry")
-                    })
-            }
+        .alert(isPresented: $viewModel.hasError, error: viewModel.error,
+               actions: {
+            Button(action: viewModel.fetchQuestions,
+                   label: {Text("Retry")})
+        }
         )
         .alert(
             "Score", isPresented: $showAlert,
@@ -104,6 +81,34 @@ struct GameView: View {
             }
         }
         .padding()
+    }
+    
+    private var next: some View {
+        Button("Next") {
+            viewModel.nextQuestion()
+        }
+        .padding()
+        .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
+    }
+    
+    private var gameInfoRow: some View {
+        HStack {
+            ProgressView(
+                currentQuestion: viewModel.currentQuestionIndex,
+                totalQuestions: viewModel.totalQuestions
+            )
+            .padding()
+            .accentColor(.blue)
+            Spacer()
+            ScoreView(score: viewModel.score)
+        }
+    }
+    
+    private var showResults : some View {
+        Button("Show results",action: {
+            showAlert = true
+        })
+        .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
     }
     
     private func color(for answer: Answer) -> Color {
