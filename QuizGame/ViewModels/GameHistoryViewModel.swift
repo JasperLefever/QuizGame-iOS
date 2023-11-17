@@ -9,11 +9,11 @@ import SwiftUI
 
 class GameHistoryViewModel: ObservableObject {
     @Published var gameHistory: Array<GameHistory> = []
-
+    
     init() {
         loadGameHistory()
     }
-
+    
     private func loadGameHistory() {
         if let data = UserDefaults.standard.data(forKey: "gameHistory") {
             let decoder = JSONDecoder()
@@ -28,7 +28,7 @@ class GameHistoryViewModel: ObservableObject {
         gameHistory.append(newGame)
         saveGameHistory()
     }
-
+    
     private func saveGameHistory() {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(gameHistory) {

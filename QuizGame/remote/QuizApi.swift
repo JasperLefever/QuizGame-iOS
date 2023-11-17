@@ -14,25 +14,25 @@ extension URLSession {
         let url = URL(string: "\(base)/\(endpoint)")!
         
         self.dataTask(with: url) { (data, response, error) in
-        
-      if let error = error {
-          completion(.failure(QuizApiError.custom(error: error)))
-      }
-
-      if let data = data {
-        do {
             
-          let data = try JSONDecoder().decode(T.self, from: data)
-          completion(.success(data))
+            if let error = error {
+                completion(.failure(QuizApiError.custom(error: error)))
+            }
             
-        } catch _ {
-            
-            completion(.failure(QuizApiError.failedToDecode))
-            
-        }
-      }
-    }.resume()
-  }
+            if let data = data {
+                do {
+                    
+                    let data = try JSONDecoder().decode(T.self, from: data)
+                    completion(.success(data))
+                    
+                } catch _ {
+                    
+                    completion(.failure(QuizApiError.failedToDecode))
+                    
+                }
+            }
+        }.resume()
+    }
 }
 
 

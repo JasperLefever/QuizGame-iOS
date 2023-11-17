@@ -8,8 +8,8 @@
 import Foundation
 
 struct Question {
-  var id: UUID
-  var categoryId: UUID
-  var question: String
-  var answers: [Answer] = []
+    var id: UUID
+    var categoryId: UUID
+    var question: String
+    var answers: [Answer] = []
 }

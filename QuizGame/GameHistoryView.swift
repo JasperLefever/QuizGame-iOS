@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct GameHistoryView: View {
     @ObservedObject var viewModel: GameHistoryViewModel
-
+    
     var body: some View {
         NavigationView {
             List(viewModel.gameHistory) { game in
@@ -24,7 +22,7 @@ struct GameHistoryView: View {
             .navigationBarTitle("Game History")
         }
     }
-
+    
     func formattedDate(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short

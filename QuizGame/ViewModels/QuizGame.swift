@@ -91,6 +91,7 @@ class QuizGame: ObservableObject {
               self.model.setQuestions(questions)
               print(questions)
 
+              
               self.model.selectCategory(data.items!.first!.category)
               self.isLoading = false
           case .failure(let error):

@@ -13,15 +13,6 @@ class CategoriesViewModel: ObservableObject {
     @Published var hasError = false
     @Published var error: QuizApiError?
     
-    
-    private static let cat: [Category] = [
-        Category( name: "Technology", icon: "gear"),
-        Category( name: "Science", icon: "atom"),
-        Category(name: "Travel", icon: "airplane"),
-        Category( name: "Food", icon: "fork.knife"),
-        Category( name: "Music", icon: "music.note"),
-    ]
-    
     //mainactor werkt niet??
     func fetchCategories() {
         
@@ -47,11 +38,7 @@ class CategoriesViewModel: ObservableObject {
             var metadata : Metadata?
             var items: Array<Category>?
         }
-    
-    }
-    
-    func selectCategory(_ category: Category) {
-        //gamemodel.selectCategory(category)
+        
     }
     
 }
