@@ -18,7 +18,7 @@ class GameHistoryViewModel: ObservableObject {
         if let data = UserDefaults.standard.data(forKey: "gameHistory") {
             let decoder = JSONDecoder()
             if let decoded = try? decoder.decode([GameHistory].self, from: data) {
-                gameHistory = decoded
+                gameHistory = decoded.reversed()
             }
         }
     }
@@ -28,6 +28,12 @@ class GameHistoryViewModel: ObservableObject {
         gameHistory.append(newGame)
         saveGameHistory()
     }
+    
+    func removeGameFromHistory(indices: IndexSet) {
+        gameHistory.remove(atOffsets: indices)
+        saveGameHistory()
+       }
+
     
     private func saveGameHistory() {
         let encoder = JSONEncoder()

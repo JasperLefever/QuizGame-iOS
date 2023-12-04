@@ -12,17 +12,25 @@ struct GameHistoryView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.gameHistory) { game in
-                VStack(alignment: .leading) {
-                    Text("Category: \(game.category)")
-                    Text("Score: \(game.score)")
-                    Text("Date: \(formatDate(game.date))")
-                }
+            List {
+                ForEach(viewModel.gameHistory) { game in
+                    VStack(alignment: .leading) {
+                        Text("Category: \(game.category)")
+                        Text("Score: \(game.score)")
+                        Text("Date: \(formatDate(game.date))")
+                    }
+                }.onDelete(perform: deleteItem)
             }
             .navigationBarTitle("Game History")
         }
     }
+    
+    private func deleteItem(at offset: IndexSet) {
+        viewModel.removeGameFromHistory(indices: offset)
+    }
 }
+
+
 
 
 #Preview {
