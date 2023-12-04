@@ -12,17 +12,12 @@ struct Game {
     // MARK: - properties
     var questions: [Question] =  []
     var score: Int = 0
-    var currentCategory: Category?
     var currentQuestionIndex: Int = 0
     var isDone: Bool = false
     var isAnswered: Bool = false
     
     
     // MARK: functions
-    
-    mutating func selectCategory(_ cat: Category) {
-        currentCategory = cat
-    }
     
     mutating func check(_ answer: Answer) {
         isAnswered = true
@@ -44,15 +39,5 @@ struct Game {
     mutating func setQuestions(_ questions: [Question]) {
         self.questions = questions
     }
-    
-    mutating func reset() {
-        questions =  []
-        score = 0
-        currentCategory = nil
-        currentQuestionIndex = 0
-        isDone = false
-        isAnswered = false
-    }
-    
     
 }

@@ -49,7 +49,7 @@ struct GameView: View {
                 Button(
                     "End",
                     action: {
-                        history.addGameToHistory(category: viewModel.currentCategory!.name, score: viewModel.score, date: Date())
+                        history.addGameToHistory(category: viewModel.category.name, score: viewModel.score, date: Date())
                         navigationPath.removeLast(navigationPath.count)
                     })
             },

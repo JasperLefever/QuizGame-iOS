@@ -8,14 +8,16 @@
 import SwiftUI
 
 class QuizGame: ObservableObject {
+    var category: Category
     @Published var hasError = false
     @Published var error: QuizApiError?
     @Published var isLoading = true
     
     @Published private var model: Game = Game()
     
-    var currentCategory: Category? {
-        return model.currentCategory
+    init(category: Category) {
+        self.category = category
+        fetchQuestions()
     }
     
     var questions: [Question] {
@@ -56,16 +58,12 @@ class QuizGame: ObservableObject {
         model.nextQuestion()
     }
     
-    func select(category: Category) {
-        model.selectCategory(category)
-    }
-    
     func fetchQuestions() {
         hasError = false
         isLoading = true
         let page = 1
         let perPage = 10
-        let endpoint = "questions/category/\(currentCategory!.id)?page=\(page)&perPage=\(perPage)"
+        let endpoint = "questions/category/\(category.id)?page=\(page)&perPage=\(perPage)"
         URLSession.shared.fetchData(endpoint: endpoint) {
             (result: Result<QuestionsResult, QuizApiError>) in
             DispatchQueue.main.async {
@@ -85,10 +83,7 @@ class QuizGame: ObservableObject {
                             })
                     }
                     self.model.setQuestions(questions)
-                    print(questions)
                     
-                    
-                    self.model.selectCategory(data.items!.first!.category)
                     self.isLoading = false
                 case .failure(let error):
                     print(error)
@@ -117,9 +112,5 @@ class QuizGame: ObservableObject {
             var isCorrect: Bool
             var questionId: UUID
         }
-    }
-    
-    func reset(){
-        model.reset()
     }
 }
