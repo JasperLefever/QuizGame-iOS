@@ -37,7 +37,7 @@ struct CategoryListView: View {
             })
             .navigationTitle("Quiz Categories")
             .navigationDestination(for: Category.self) { category in
-                    GameView(viewModel: QuizGame(category: category), navigationPath: $path)
+                GameView(viewModel: QuizGame(category: category), navigationPath: $path)
             }
             .toolbar(content: {
                 Button(action: {

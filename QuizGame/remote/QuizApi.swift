@@ -136,41 +136,35 @@ extension URLSession {
         }.resume()
     }
 }
+
+enum QuizApiError: LocalizedError {
+    case invalidURL
+    case invalidResponse
+    case clientError(statusCode: Int)
+    case serverError(statusCode: Int)
+    case unknownError
+    case custom(error: Error)
+    case failedToDecode
+    case failedToEncode
     
-    enum QuizApiError: LocalizedError {
-        case invalidURL
-        case invalidResponse
-        case clientError(statusCode: Int)
-        case serverError(statusCode: Int)
-        case unknownError
-        case custom(error: Error)
-        case failedToDecode
-        case failedToEncode
-        
-        var errorDescription: String? {
-            switch self {
-            case .invalidURL:
-                return "The URL is invalid"
-            case .invalidResponse:
-                return "The response is invalid"
-            case .clientError(let statusCode):
-                return "The client encountered an error with status code \(statusCode)"
-            case .serverError(let statusCode):
-                return "The server encountered an error with status code \(statusCode)"
-            case .unknownError:
-                return "An unknown error occured"
-            case .custom(let error):
-                return error.localizedDescription
-            case .failedToDecode:
-                return "Failed to decode the data"
-            case .failedToEncode:
-                return "Failed to encode the data"
-            }
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "The URL is invalid"
+        case .invalidResponse:
+            return "The response is invalid"
+        case .clientError(let statusCode):
+            return "The client encountered an error with status code \(statusCode)"
+        case .serverError(let statusCode):
+            return "The server encountered an error with status code \(statusCode)"
+        case .unknownError:
+            return "An unknown error occured"
+        case .custom(let error):
+            return error.localizedDescription
+        case .failedToDecode:
+            return "Failed to decode the data"
+        case .failedToEncode:
+            return "Failed to encode the data"
         }
     }
-    
-    struct Metadata: Codable {
-        var total: Int
-        var page: Int
-        var per: Int
-    }
+}

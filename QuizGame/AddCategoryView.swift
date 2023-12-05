@@ -13,11 +13,11 @@ struct AddCategoryView: View {
     @State private var categoryName = ""
     @State private var selectedIcon = "star"
     @State private var isAddButtonDisabled = true
-
+    
     let systemIcons = ["star", "heart", "circle", "square", "triangle"]
-
+    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Category Information")) {
                     TextField("Category Name", text: $categoryName)
@@ -25,7 +25,7 @@ struct AddCategoryView: View {
                             isAddButtonDisabled = newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                         }
                 }
-
+                
                 Section(header: Text("Select Icon")) {
                     Picker("Icon", selection: $selectedIcon) {
                         ForEach(systemIcons, id: \.self) { iconName in
@@ -35,7 +35,7 @@ struct AddCategoryView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                 }
-
+                
                 Section {
                     Button("Add Category") {
                         viewmodel.addCategory(name: categoryName, icon: selectedIcon)

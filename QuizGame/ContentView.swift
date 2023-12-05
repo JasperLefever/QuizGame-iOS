@@ -21,6 +21,10 @@ struct ContentView: View {
                 .tabItem {
                     Label("History", systemImage: "archivebox")
                 }
+            AddQuestionView(viewModel : AddQuestionViewModel())
+                .tabItem {
+                    Label("Questions", systemImage: "mail")
+                }
         }
         
     }

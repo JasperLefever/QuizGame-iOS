@@ -94,24 +94,6 @@ class QuizGame: ObservableObject {
             }
         }
         
-        struct QuestionsResult: Codable {
-            var metadata: Metadata?
-            var items: [QuestionResult]?
-        }
-        
-        struct QuestionResult: Codable {
-            var id: UUID
-            var category: Category
-            var questionText: String
-            var answers: [AnswerResult]
-        }
-        
-        struct AnswerResult: Codable {
-            var id: UUID
-            var answerText: String
-            var isCorrect: Bool
-            var questionId: UUID
-        }
     }
     
     

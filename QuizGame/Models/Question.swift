@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Question {
+struct Question: Hashable, Codable {
     var id: UUID
     var categoryId: UUID
     var question: String

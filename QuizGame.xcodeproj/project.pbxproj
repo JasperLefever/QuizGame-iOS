@@ -16,6 +16,9 @@
 		8484A13F2B01272000AAA18E /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484A13E2B01272000AAA18E /* CategoryView.swift */; };
 		8484A1412B01272100AAA18E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8484A1402B01272100AAA18E /* Assets.xcassets */; };
 		8484A1442B01272100AAA18E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8484A1432B01272100AAA18E /* Preview Assets.xcassets */; };
+		848BA8D42B1F97D0004BCD0F /* AddQuestionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BA8D32B1F97D0004BCD0F /* AddQuestionsViewModel.swift */; };
+		848BA8D62B1F97FB004BCD0F /* AddQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BA8D52B1F97FB004BCD0F /* AddQuestionsView.swift */; };
+		848BA8DA2B1FBA00004BCD0F /* DTOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848BA8D92B1FBA00004BCD0F /* DTOs.swift */; };
 		8494FBEF2B04D342001BBF6B /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494FBEE2B04D342001BBF6B /* Category.swift */; };
 		8494FBF32B04D673001BBF6B /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494FBF22B04D673001BBF6B /* Game.swift */; };
 		8494FBF52B04D7EC001BBF6B /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8494FBF42B04D7EC001BBF6B /* Question.swift */; };
@@ -38,6 +41,9 @@
 		8484A13E2B01272000AAA18E /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		8484A1402B01272100AAA18E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8484A1432B01272100AAA18E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		848BA8D32B1F97D0004BCD0F /* AddQuestionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuestionsViewModel.swift; sourceTree = "<group>"; };
+		848BA8D52B1F97FB004BCD0F /* AddQuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuestionsView.swift; sourceTree = "<group>"; };
+		848BA8D92B1FBA00004BCD0F /* DTOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTOs.swift; sourceTree = "<group>"; };
 		8494FBEE2B04D342001BBF6B /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		8494FBF22B04D673001BBF6B /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		8494FBF42B04D7EC001BBF6B /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -64,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				845DC3D92B077F4100522D7B /* QuizApi.swift */,
+				848BA8D92B1FBA00004BCD0F /* DTOs.swift */,
 			);
 			path = remote;
 			sourceTree = "<group>";
@@ -101,6 +108,7 @@
 				8494FBF12B04D5D6001BBF6B /* ViewModels */,
 				8494FBF02B04D5C6001BBF6B /* Models */,
 				8484A13E2B01272000AAA18E /* CategoryView.swift */,
+				848BA8D52B1F97FB004BCD0F /* AddQuestionsView.swift */,
 				84E2412D2B1E670300CB8F93 /* AddCategoryView.swift */,
 				8494FBF62B04E122001BBF6B /* GameView.swift */,
 				8494FBF82B04FA8A001BBF6B /* GameHistoryView.swift */,
@@ -137,6 +145,7 @@
 				8467AB9F2B077074007C0BB3 /* CategoriesViewModel.swift */,
 				84C500412B04D2B1001FFD1A /* QuizGame.swift */,
 				8494FBFC2B04FB54001BBF6B /* GameHistoryViewModel.swift */,
+				848BA8D32B1F97D0004BCD0F /* AddQuestionsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -215,6 +224,8 @@
 				8494FBF32B04D673001BBF6B /* Game.swift in Sources */,
 				84E2412E2B1E670300CB8F93 /* AddCategoryView.swift in Sources */,
 				8467AB9E2B077069007C0BB3 /* ContentView.swift in Sources */,
+				848BA8DA2B1FBA00004BCD0F /* DTOs.swift in Sources */,
+				848BA8D42B1F97D0004BCD0F /* AddQuestionsViewModel.swift in Sources */,
 				84C500422B04D2B1001FFD1A /* QuizGame.swift in Sources */,
 				8494FBF52B04D7EC001BBF6B /* Question.swift in Sources */,
 				8484A13D2B01272000AAA18E /* QuizGameApp.swift in Sources */,
@@ -222,6 +233,7 @@
 				845DC3DD2B07C12E00522D7B /* Util.swift in Sources */,
 				845DC3DA2B077F4100522D7B /* QuizApi.swift in Sources */,
 				8494FBEF2B04D342001BBF6B /* Category.swift in Sources */,
+				848BA8D62B1F97FB004BCD0F /* AddQuestionsView.swift in Sources */,
 				8494FBF72B04E122001BBF6B /* GameView.swift in Sources */,
 				8467ABA02B077074007C0BB3 /* CategoriesViewModel.swift in Sources */,
 				8494FBFB2B04FB1C001BBF6B /* GameHistory.swift in Sources */,

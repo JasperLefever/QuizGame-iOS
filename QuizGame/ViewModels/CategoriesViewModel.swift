@@ -33,11 +33,6 @@ class CategoriesViewModel: ObservableObject {
             }
         }
         
-        struct CategoryResult: Codable {
-            var metadata: Metadata?
-            var items: [Category]?
-        }
-        
     }
     
     func deleteCategory(at indices: IndexSet) {
