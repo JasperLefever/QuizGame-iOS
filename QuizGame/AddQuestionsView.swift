@@ -46,30 +46,17 @@ struct AddQuestionView: View {
                     }
                     .disabled(viewModel.allowSubmit)
                 }
-            }
+            }.navigationTitle("Add new Question")
+
         }
         .alert(isPresented: $viewModel.hasError, error: viewModel.error, actions: {
             Button(action: viewModel.clear, label: {
                 Text("Retry")
             })
         })
-        .navigationTitle("Add new Question")
-        .onTapGesture {
-            hideKeyboard()
-        }
         .refreshable {
             viewModel.fetchCategories()
         }
         
     }
 }
-
-//https://www.hackingwithswift.com/quick-start/swiftui/how-to-dismiss-the-keyboard-for-a-textfield
-#if canImport(UIKit)
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(
-            #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-#endif
