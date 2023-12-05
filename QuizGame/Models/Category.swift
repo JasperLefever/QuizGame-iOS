@@ -11,5 +11,5 @@ struct Category: Hashable, Codable {
     var id: UUID = UUID()
     var name: String
     var icon: String
-    var count: Int = 0
+    var questionCount: Int?
 }

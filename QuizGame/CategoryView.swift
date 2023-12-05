@@ -25,7 +25,7 @@ struct CategoryListView: View {
                             Text(category.name)
                                 .font(.headline)
                         }
-                    }.disabled(category.count == 0)
+                    }.disabled(category.questionCount == 0)
                 }.onDelete(perform: { indexSet in
                     deleteCategory(at: indexSet)
                 })
