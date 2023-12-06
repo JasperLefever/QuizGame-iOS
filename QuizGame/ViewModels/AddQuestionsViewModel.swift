@@ -15,7 +15,7 @@ class AddQuestionViewModel: ObservableObject {
     @Published var categories: [Category] = []
     @Published var hasError = false
     @Published var error: QuizApiError?
-    @Published var selectedCategory: Category?
+    @Published var selectedCategory: Category? = nil
     
     init() {
         fetchCategories()
@@ -63,6 +63,9 @@ class AddQuestionViewModel: ObservableObject {
                 switch result {
                 case .success(let data):
                     self.categories = data.items!
+                    if !self.categories.isEmpty {
+                        self.selectedCategory = self.categories.first
+                    }
                 case .failure(let error):
                     self.hasError = true
                     self.error = error
