@@ -8,21 +8,23 @@
 import SwiftUI
 
 struct AddQuestionView: View {
-    @StateObject var viewModel: AddQuestionViewModel
+    @StateObject var viewModel: AddQuestionViewModel = AddQuestionViewModel()
+    
     
     var body: some View {
         NavigationStack {
             Form {
                 Picker("Select category", selection: $viewModel.selectedCategory) {
                     if viewModel.categories.isEmpty {
-                        Text("No categories available")
+                        Text("None").tag(Optional<Category>.none)
                     } else {
                         ForEach(viewModel.categories) { category in
-                            Text("\(category.name)").tag(category)
+                            Text("\(category.name)").tag(Optional<Category>.some(category))
                         }
                     }
                     
                 }.pickerStyle(.navigationLink)
+                    .disabled(viewModel.categories.isEmpty)
                 
                 
                 Section(header: Text("Question")) {
@@ -44,10 +46,38 @@ struct AddQuestionView: View {
                     Button("Add Question") {
                         viewModel.saveQuestion()
                     }
-                    .disabled(viewModel.allowSubmit)
+                    .disabled(!viewModel.validateFields())
                 }
-            }.navigationTitle("Add new Question")
-
+            }
+            .navigationTitle("Add new Question")
+            .toolbar {
+                
+                ToolbarItem (placement: .topBarLeading) {
+                    Button(action: {
+                        hideKeyboard()
+                        viewModel.clear()
+                    }) {
+                        Text("Clear")
+                    }
+                }
+                
+                ToolbarItem (placement: .topBarTrailing) {
+                    Button(action: {
+                        hideKeyboard()
+                    }) {
+                        Image(systemName: "keyboard.chevron.compact.down")
+                    }
+                }
+                
+                ToolbarItem (placement: .topBarTrailing) {
+                    Button(action: {
+                        hideKeyboard()
+                    }) {
+                        Text("Save")
+                    }.disabled(!viewModel.validateFields())
+                }
+                
+            }
         }
         .alert(isPresented: $viewModel.hasError, error: viewModel.error, actions: {
             Button(action: viewModel.clear, label: {
@@ -60,3 +90,12 @@ struct AddQuestionView: View {
         
     }
 }
+
+
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif

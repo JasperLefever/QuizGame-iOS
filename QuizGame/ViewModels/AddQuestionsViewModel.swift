@@ -13,12 +13,9 @@ class AddQuestionViewModel: ObservableObject {
     @Published var incorrectAnswers: [String] = ["", ""]
     @Published var correctAnswer: String = ""
     @Published var categories: [Category] = []
-    
     @Published var hasError = false
     @Published var error: QuizApiError?
     @Published var selectedCategory: Category?
-    
-    @Published var allowSubmit: Bool = false
     
     init() {
         fetchCategories()
@@ -39,14 +36,16 @@ class AddQuestionViewModel: ObservableObject {
         let endpoint = "questions"
         URLSession.shared.postData(endpoint: endpoint, body: newQuestion) {
             (result: Result<QuestionResult, QuizApiError>) in
-            switch result {
-            case .success:
-                self.questionText = ""
-                self.incorrectAnswers = ["", ""]
-                self.correctAnswer = ""
-            case .failure(let error):
-                self.hasError = true
-                self.error = error
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self.questionText = ""
+                    self.incorrectAnswers = ["", ""]
+                    self.correctAnswer = ""
+                case .failure(let error):
+                    self.hasError = true
+                    self.error = error
+                }
             }
         }
     }
@@ -80,5 +79,25 @@ class AddQuestionViewModel: ObservableObject {
         incorrectAnswers = ["", ""]
         correctAnswer = ""
     }
+    
+    func validateFields() -> Bool {
+         guard !questionText.isEmpty else {
+             return false
+         }
+
+         guard !incorrectAnswers.contains(where: { $0.isEmpty || $0.contains(" ") }) else {
+             return false
+         }
+
+         guard !correctAnswer.isEmpty, !correctAnswer.contains(" ") else {
+             return false
+         }
+
+         guard selectedCategory != nil else {
+             return false
+         }
+
+         return true
+     }
     
 }

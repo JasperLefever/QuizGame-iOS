@@ -48,7 +48,11 @@ struct AddCategoryView: View {
             .navigationBarItems(
                 leading: Button("Cancel") {
                     isPresented = false
-                }
+                },
+                trailing: Button("Save" ,action: {
+                    viewmodel.addCategory(name: categoryName, icon: selectedIcon)
+                    isPresented = false
+                }).disabled(isAddButtonDisabled)
             )
         }
     }
