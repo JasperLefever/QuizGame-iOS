@@ -7,7 +7,7 @@
 
 import Foundation
 
-var baseURL = "http://192.168.0.111:8080"
+var baseURL = "http://localhost:8080"
 
 extension URLSession {
     func fetchData<T: Codable>(
