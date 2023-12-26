@@ -71,7 +71,7 @@ struct AddQuestionView: View {
                 
                 ToolbarItem (placement: .topBarTrailing) {
                     Button(action: {
-                        hideKeyboard()
+                        viewModel.saveQuestion()
                     }) {
                         Text("Save")
                     }.disabled(!viewModel.validateFields())
