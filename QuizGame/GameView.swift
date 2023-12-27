@@ -1,63 +1,72 @@
-//
-//  GameView.swift
-//  QuizGame
-//
-//  Created by Jasper Lefever on 15/11/2023.
-//
-
 import SwiftUI
 
 struct GameView: View {
     @ObservedObject var viewModel: QuizGame
     @State var showAlert: Bool = false
-    @State var navigateBack = false
     @EnvironmentObject var history: GameHistoryViewModel
     @Binding var navigationPath: NavigationPath
     
-    
     var body: some View {
+        GeometryReader { geometry in
+            if geometry.size.width > geometry.size.height {
+                landscapeLayout
+            } else {
+                portraitLayout
+            }
+        }
+        .alert(isPresented: $viewModel.hasError, error: viewModel.error) {
+            Button("Retry", action: viewModel.fetchQuestions)
+        }
+        .alert("Score", isPresented: $showAlert) {
+            Button("End", action: {
+                endGame()
+            })
+        } message: {
+            Text("Your score was: \(viewModel.score)")
+        }
+    }
+    
+    private var portraitLayout: some View {
         VStack {
             if viewModel.isLoading {
-                SwiftUI.ProgressView {
-                    Text("Loading")
-                }
+                loadingView
             } else {
-                VStack {
-                    gameInfoRow
-                    
-                    questionView
-                }
-                
+                gameInfoRow
+                questionView
                 Spacer()
-                
-                if !viewModel.isDone {
-                    next
-                } else {
-                    showResults
+                bottomButtons
+            }
+        }
+        .padding()
+    }
+    
+    private var landscapeLayout: some View {
+        HStack {
+            if viewModel.isLoading {
+                loadingView
+            } else {
+                GeometryReader { geometry in
+                    HStack {
+                        VStack {
+                            ScoreView(score: viewModel.score)
+                            ProgressView(currentQuestion: viewModel.currentQuestionIndex + 1, totalQuestions: viewModel.totalQuestions)
+                            Spacer()
+                            bottomButtons
+                        }.frame(width: geometry.size.width * 0.3)
+                        VStack {
+                            questionView.padding(0)
+                        }
+                    }
                 }
             }
         }
         .padding()
-        .alert(isPresented: $viewModel.hasError, error: viewModel.error,
-               actions: {
-            Button(action: viewModel.fetchQuestions,
-                   label: {Text("Retry")})
+    }
+    
+    private var loadingView: some View {
+        SwiftUI.ProgressView {
+            Text("Loading")
         }
-        )
-        .alert(
-            "Score", isPresented: $showAlert,
-            actions: {
-                Button(
-                    "End",
-                    action: {
-                        history.addGameToHistory(category: viewModel.category.name, score: viewModel.score, date: Date())
-                        navigationPath.removeLast(navigationPath.count)
-                    })
-            },
-            message: {
-                Text("Your score was: \(viewModel.score)")
-            }
-        )
     }
     
     private var questionView: some View {
@@ -66,6 +75,7 @@ struct GameView: View {
                 .font(.title)
                 .multilineTextAlignment(.center)
                 .padding(.bottom, 16)
+                .fixedSize(horizontal: false, vertical: true)
             
             ForEach(viewModel.currentQuestion.answers, id: \.self) { answer in
                 Button(action: {
@@ -84,20 +94,10 @@ struct GameView: View {
         .padding()
     }
     
-    private var next: some View {
-        Button("Next") {
-            viewModel.nextQuestion()
-        }
-        .padding()
-        .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
-    }
-    
     private var gameInfoRow: some View {
         HStack {
-            ProgressView(
-                currentQuestion: viewModel.currentQuestionIndex,
-                totalQuestions: viewModel.totalQuestions
-            )
+            ProgressView(currentQuestion: viewModel.currentQuestionIndex,
+                         totalQuestions: viewModel.totalQuestions)
             .padding()
             .accentColor(.blue)
             Spacer()
@@ -105,20 +105,27 @@ struct GameView: View {
         }
     }
     
-    private var showResults : some View {
-        Button("Show results",action: {
-            showAlert = true
-        })
-        .disabled(!viewModel.isAnswered)  // zet knop af als nog niet beantwoord is
+    private var bottomButtons: some View {
+        Group {
+            if !viewModel.isDone {
+                Button("Next", action: viewModel.nextQuestion)
+                    .padding()
+                    .disabled(!viewModel.isAnswered)
+            } else {
+                Button("Show results", action: { showAlert = true })
+                    .disabled(!viewModel.isAnswered)
+            }
+        }
+    }
+    
+    private func endGame() {
+        history.addGameToHistory(category: viewModel.category.name, score: viewModel.score, date: Date())
+        navigationPath.removeLast(navigationPath.count)
     }
     
     private func color(for answer: Answer) -> Color {
         if viewModel.isAnswered {
-            if answer.isCorrect {
-                return .green
-            } else {
-                return .red
-            }
+            return answer.isCorrect ? .green : .red
         } else {
             return .blue
         }
@@ -155,5 +162,4 @@ struct ProgressView: View {
             }
             .padding(EdgeInsets(top: 16, leading: 0, bottom: 0, trailing: 16))
     }
-    
 }

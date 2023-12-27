@@ -11,7 +11,7 @@ struct GameHistoryView: View {
     @ObservedObject var viewModel: GameHistoryViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(viewModel.gameHistory) { game in
                     VStack(alignment: .leading) {
