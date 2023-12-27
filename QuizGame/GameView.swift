@@ -14,6 +14,7 @@ struct GameView: View {
     @EnvironmentObject var history: GameHistoryViewModel
     @Binding var navigationPath: NavigationPath
     
+    
     var body: some View {
         VStack {
             if viewModel.isLoading {

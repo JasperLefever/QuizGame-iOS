@@ -12,9 +12,21 @@ struct AddQuestionView: View {
     @StateObject var viewModel: AddQuestionViewModel = AddQuestionViewModel()
     
     private let toastOptions = SimpleToastOptions(
-        alignment: .bottom,
-        hideAfter: 5
+        alignment: Constants.Toast.alignment,
+        hideAfter: Constants.Toast.hideAfter
     )
+
+    
+    private struct Constants {
+        struct Toast {
+            static let alignment : Alignment = .bottom
+            static let hideAfter: TimeInterval = 5
+            static let color: Color = Color.green.opacity(0.8)
+            static let textColor: Color = Color.white
+            static let cornerRadius : CGFloat = 10
+            static let padding : Edge.Set = .top
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -95,10 +107,10 @@ struct AddQuestionView: View {
         .simpleToast(isPresented: $viewModel.showToast, options: toastOptions) {
             Label(viewModel.toastText, systemImage: "checkmark.circle.fill")
                 .padding()
-                .background(Color.green.opacity(0.8))
-                .foregroundColor(Color.white)
-                .cornerRadius(10)
-                .padding(.top)
+                .background(Constants.Toast.color)
+                .foregroundColor(Constants.Toast.textColor)
+                .cornerRadius(Constants.Toast.cornerRadius)
+                .padding(Constants.Toast.padding)
             }
     }
 }
