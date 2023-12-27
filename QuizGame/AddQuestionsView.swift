@@ -6,10 +6,15 @@
 //
 
 import SwiftUI
+import SimpleToast
 
 struct AddQuestionView: View {
     @StateObject var viewModel: AddQuestionViewModel = AddQuestionViewModel()
     
+    private let toastOptions = SimpleToastOptions(
+        alignment: .bottom,
+        hideAfter: 5
+    )
     
     var body: some View {
         NavigationStack {
@@ -87,7 +92,14 @@ struct AddQuestionView: View {
         .refreshable {
             viewModel.fetchCategories()
         }
-        
+        .simpleToast(isPresented: $viewModel.showToast, options: toastOptions) {
+            Label(viewModel.toastText, systemImage: "checkmark.circle.fill")
+                .padding()
+                .background(Color.green.opacity(0.8))
+                .foregroundColor(Color.white)
+                .cornerRadius(10)
+                .padding(.top)
+            }
     }
 }
 

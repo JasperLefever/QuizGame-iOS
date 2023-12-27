@@ -12,6 +12,8 @@ class CategoriesViewModel: ObservableObject {
     @Published var categories: [Category] = []
     @Published var hasError = false
     @Published var error: QuizApiError?
+    @Published var showToast = false
+    @Published var toastText = ""
     
     func fetchCategories() {
         
@@ -69,6 +71,8 @@ class CategoriesViewModel: ObservableObject {
                 switch result {
                 case .success:
                     self.fetchCategories()
+                    self.showToast = true
+                    self.toastText = "Category successfully created"
                 case .failure(let error):
                     self.hasError = true
                     self.error = error

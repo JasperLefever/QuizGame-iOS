@@ -6,12 +6,17 @@
 //
 
 import SwiftUI
+import SimpleToast
 
 struct CategoryListView: View {
     @ObservedObject var viewmodel: CategoriesViewModel
     @State var path = NavigationPath()
     @State private var isAddingCategory = false
-    @State private var emptyCategory = false
+    
+    private let toastOptions = SimpleToastOptions(
+        alignment: .bottom,
+        hideAfter: 5
+    )
     
     var body: some View {
         NavigationStack (path: $path) {
@@ -52,6 +57,14 @@ struct CategoryListView: View {
             .sheet(isPresented: $isAddingCategory, content: {
                 AddCategoryView(viewmodel: viewmodel, isPresented: $isAddingCategory)
             })
+            .simpleToast(isPresented: $viewmodel.showToast, options: toastOptions) {
+                Label(viewmodel.toastText, systemImage: "checkmark.circle.fill")
+                    .padding()
+                    .background(Color.green.opacity(0.8))
+                    .foregroundColor(Color.white)
+                    .cornerRadius(10)
+                    .padding(.top)
+                }
         }.onAppear(perform: viewmodel.fetchCategories )
     }
     

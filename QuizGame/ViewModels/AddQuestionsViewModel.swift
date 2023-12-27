@@ -16,6 +16,8 @@ class AddQuestionViewModel: ObservableObject {
     @Published var hasError = false
     @Published var error: QuizApiError?
     @Published var selectedCategory: Category? = nil
+    @Published var showToast = false
+    @Published var toastText = ""
     
     init() {
         fetchCategories()
@@ -42,6 +44,8 @@ class AddQuestionViewModel: ObservableObject {
                     self.questionText = ""
                     self.incorrectAnswers = ["", ""]
                     self.correctAnswer = ""
+                    self.showToast = true
+                    self.toastText = "Question successfully created"
                 case .failure(let error):
                     self.hasError = true
                     self.error = error
